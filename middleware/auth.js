@@ -1,22 +1,19 @@
-import  AuthenticationError from "apollo-server-errors";
+
+import  Jwt  from "jsonwebtoken"
 
 
 
-export function verifyToken(req, res, next) {
-  let token = req.headers["authorization"];
-  if (token) {
-    Jwt.verify(token, jwtKey, (err, valid) => {
+export const verifyToken = async({req,res}) =>{
+  const token =await req.headers.authorization
+  Jwt.verify(token, jwtKey,(err,valid) =>{
       if (err) {
-        AuthenticationError("enter a valid token")
-      } else {
-        
-        return true
-      }
-    });
-  } else {
-    AuthenticationError("please add a token")
-  }
+          new AuthenticationError("enter a valid token")
+        } else {
+          
+          res.send(valid)
+        }
+  })
+  console.log(token)
 }
-
 
 export default verifyToken

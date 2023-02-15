@@ -4,23 +4,28 @@ import { resolvers } from "./schema/resolvers.js";
 import User from "./models/User.js";
 import "./models/config.js"
 import mongoose from 'mongoose';
-import usersResolvers from "./resolvers/user.js";
+import  Jwt  from "jsonwebtoken";
+import { AuthenticationError } from "apollo-server";
+const jwtKey = "Yash2304"
 
-
-const users =async (id)=>{
-    const user = await User.findById(id)
-    console.log(user)
-    return user;
-}
 const server = new ApolloServer({typeDefs,resolvers,
-    context: async (request) => {
-        const user = await users(request.req.headers["authorization"]);
-        if(user == null) {
-            return request;
-        }
-        return { user,...request};
-    }
-})
+    // context:async({req}) =>{
+    //     const token =req.headers.authorization
+    //     Jwt.verify(token, jwtKey,(err,valid) =>{
+    //         if (err) {
+    //             new AuthenticationError("enter a valid token")
+    //           } else {
+                
+    //             return true
+    //           }
+    //     })
+    //     console.log(token)
+       
+
+    // },
+
+}
+    )
 
 
 const port = 2000
