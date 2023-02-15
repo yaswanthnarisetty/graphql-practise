@@ -48,6 +48,7 @@ export const usersResolvers = {
         const token = Jwt.sign({ user_id: User._id, email }, "Yash2304", {
             expiresIn: "2h",
           });
+          const to = token
           user.token = token
           console.log(user.token)
           return {
@@ -61,11 +62,15 @@ export const usersResolvers = {
       }
         
     },
+    
   },
   Query : {
     user :(_,{ID}) => User.findById(ID)
-  }
+  },
+
+  
 };
+
 
 
 export default usersResolvers;

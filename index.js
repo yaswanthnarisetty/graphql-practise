@@ -14,8 +14,7 @@ const users =async (id)=>{
 }
 const server = new ApolloServer({typeDefs,resolvers,
     context: async (request) => {
-        const user = await users(request.req.headers["auth"]);
-        console.log("dssds",request.req.headers);
+        const user = await users(request.req.headers["authorization"]);
         if(user == null) {
             return request;
         }

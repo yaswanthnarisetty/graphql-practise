@@ -1,11 +1,13 @@
 import Product from "../models/Product.js";
 import { ApolloError } from "apollo-server-errors";
 import User from "../models/User.js";
-
+import usersResolvers from "./user.js";
+import verifyToken from "../middleware/auth.js";
 export const ProductResolver = {
     Mutation :{
 
         async AddProduct(root,{productInput:{name,price,category,company}}){
+            
             let product = new Product({
                 name:name,
                 price:price,
@@ -13,6 +15,7 @@ export const ProductResolver = {
                 company:company
             })
             const result = await product.save()
+
             return{
                 _id:result._id,
                 ...result._doc
@@ -49,7 +52,9 @@ export const ProductResolver = {
     },
     Query : { 
         getProducts:async ()=>{
+            console.log(verifyToken)
             const product = await Product.find()
+            
             return product;
         },
         
