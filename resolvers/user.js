@@ -25,7 +25,7 @@ export const usersResolvers = {
 
 
       const token = Jwt.sign({ user_id: newUser._id, email: newUser.email, role : role }, "Yash2304",{
-        expiresIn: "2h",
+        expiresIn: "15d",
       }
       
       );
@@ -46,7 +46,7 @@ export const usersResolvers = {
 
       if (user && (await bcrypt.compare(password,user.password))){
         const token = Jwt.sign({ user_id: User._id, email }, "Yash2304", {
-            expiresIn: "2h",
+            expiresIn: "15d",
           });
           const to = token
           user.token = token

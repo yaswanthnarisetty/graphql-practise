@@ -2,21 +2,26 @@ import  Jwt  from "jsonwebtoken";
 const jwtKey = "Yash2304"
 
 
-export const auth =  async (req , res, next) => {
-  console.log('a---------------------------------')
+export function auth(root,args,context){
+  
+  console.log('a---------------------------------',context)
+  let authToken;
+  console.log(context)
    try {
-      // authToken = req.headers
-      //console.log(authToken)
-      console.log("------->>>",req)
-      let authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inlhc2hAZ21haWwuY29tIiwiaWF0IjoxNjc2NTIzNDg2LCJleHAiOjE2NzY1MzA2ODZ9.FbCEH9sJEONNYxeAxjebDjCczB-BPpB2lsDqWZf0PZw"
+      console.log("------->>>",context)
+       authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inlhc2hAZ21haWwuY29tIiwiaWF0IjoxNjc2NTQxNzUxLCJleHAiOjE2Nzc4Mzc3NTF9.alJHNm11lQ2Vn_fTWtkAiw9Co21KhJx90O98Amthje4"
+      console.log("auth---------->>>>>>>>",authToken)
+      //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inlhc2hAZ21haWwuY29tIiwiaWF0IjoxNjc2NTIzNDg2LCJleHAiOjE2NzY1MzA2ODZ9.FbCEH9sJEONNYxeAxjebDjCczB-BPpB2lsDqWZf0PZw"
       if(authToken){
-          //onsole.log("----authToken---",authToken)
+          console.log("----authToken---",authToken)
           Jwt.verify(authToken, jwtKey, (err, valid) => {
               if (err) {
                 console.log({message :"please enter a valid token", code : 200, status : false});
+                res.send("errrrrrr")
               } else {
-                console.log("kdvnknvknvjkn")
-                return true
+                console.log(valid)
+                return valid
+                //next()
                 
               }
             });

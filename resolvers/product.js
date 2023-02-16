@@ -5,7 +5,6 @@ import usersResolvers from "./user.js";
 import verifyToken from "../middleware/auth.js";
 import auth from "../middleware/auth.js"
 
-import Header from "../middleware/header.js";
 
 export const ProductResolver = {
     // context: async ({req , res, next}) => {
@@ -36,11 +35,9 @@ export const ProductResolver = {
     
     Mutation :{
 
-        async AddProduct(root,{productInput:{name,price,category,company}}, ctx){
+        async AddProduct(root,{productInput:{name,price,category,company}}, context){
 
-            let sym = Header(ctx)
-            req.tk = ctx[sym].xyz
-            console.log("-------------ctx-------------",ctx[sym].xyz)
+            console.log("-------------ctx-------------",context.headers)
             let product = new Product({
                 name:name,
                 price:price,
@@ -84,10 +81,17 @@ export const ProductResolver = {
         }       
     },
     Query : { 
-        getProducts :auth(async()=>{
+        // getProducts :async()=>{
+        //     const product = await Product.find()
+        //     return product;
+        //        }
+        
+        async getProducts(root,args,context,info){
+            console.log(context)
+            // console.log('context',Object.values(context).join(',').replaceAll(',', ''))
             const product = await Product.find()
             return product;
-        })
+        }
         
 }
 }

@@ -9,9 +9,9 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context :async({req})=>{
-    // console.log(req.headers.authorization)
-    
-    return {...req}
+     //console.log(req.headers.authorization);
+    let x=req.headers.authorization
+    return x;
   },
 
 });
