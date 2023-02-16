@@ -24,7 +24,7 @@ export const usersResolvers = {
       });
 
 
-      const token = Jwt.sign({ user_id: newUser._id, email }, "Yash2304",{
+      const token = Jwt.sign({ user_id: newUser._id, email: newUser.email, role : role }, "Yash2304",{
         expiresIn: "2h",
       }
       
