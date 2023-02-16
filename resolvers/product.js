@@ -1,10 +1,12 @@
 import Product from "../models/Product.js";
-import { ApolloError } from "apollo-server-errors";
+import { ApolloError, AuthenticationError } from "apollo-server-errors";
 import User from "../models/User.js";
 import usersResolvers from "./user.js";
 import verifyToken from "../middleware/auth.js";
 import auth from "../middleware/auth.js"
+import Jwt  from "jsonwebtoken";
 
+const JwtToken = "Yash2304"
 
 export const ProductResolver = {
     // context: async ({req , res, next}) => {
@@ -81,17 +83,31 @@ export const ProductResolver = {
         }       
     },
     Query : { 
-        // getProducts :async()=>{
-        //     const product = await Product.find()
-        //     return product;
-        //        }
+        getProducts :async (root,args,context)=>{
+            // console.log(context)
+            let x=Object.values(context).join(',').replaceAll(',', '')
+            console.log(x)
+            let data = Jwt.verify(x,JwtToken)
+            if(data){
+                console.log(data)
+                const product = await Product.find()
+                return product;
+            }
+            else{
+                new AuthenticationError("please verify the token")
+            }
+            
+               }
         
-        async getProducts(root,args,context,info){
-            console.log(context)
-            // console.log('context',Object.values(context).join(',').replaceAll(',', ''))
-            const product = await Product.find()
-            return product;
-        }
+        // async getProducts(root,args,context,info){
+        //     console.log(auth())
+        //     if(auth){
+        //         const product = await Product.find()
+        //         return product;
+        //     }
+        //     // console.log('context',Object.values(context).join(',').replaceAll(',', ''))
+             
+        // }
         
 }
 }

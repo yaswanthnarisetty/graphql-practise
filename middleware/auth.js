@@ -14,17 +14,27 @@ export function auth(root,args,context){
       //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inlhc2hAZ21haWwuY29tIiwiaWF0IjoxNjc2NTIzNDg2LCJleHAiOjE2NzY1MzA2ODZ9.FbCEH9sJEONNYxeAxjebDjCczB-BPpB2lsDqWZf0PZw"
       if(authToken){
           console.log("----authToken---",authToken)
-          Jwt.verify(authToken, jwtKey, (err, valid) => {
-              if (err) {
-                console.log({message :"please enter a valid token", code : 200, status : false});
-                res.send("errrrrrr")
-              } else {
-                console.log(valid)
-                return valid
-                //next()
+
+          let data = Jwt.verify(authToken, jwtKey)
+
+          // console.log(data,"yash---->")
+
+          if(data){
+            return data
+          }else{
+            return ""
+          }
+          // Jwt.verify(authToken, jwtKey, (err, valid) => {
+          //     if (err) {
+          //       console.log({message :"please enter a valid token", code : 200, status : false});
+          //       res.send("errrrrrr")
+          //     } else {
+          //       console.log(valid)
+          //       return valid
+          //       //next()
                 
-              }
-            });
+          //     }
+          //   });
             console.log("====  req =======", )
       }else{
          console.log("please add a token");
