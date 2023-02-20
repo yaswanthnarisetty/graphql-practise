@@ -15,7 +15,6 @@ export const typeDefs = gql`
     name: String
     price: String
     category: String
-    userId: String
     company: String
   }
 
@@ -43,7 +42,7 @@ export const typeDefs = gql`
     users: [User!]!
     user(id: ID!): User
     product(id: ID): Product
-    getProducts: [Product!]!
+    getProducts: [Product]
     findProduct(id:ID):Product
   }
 
